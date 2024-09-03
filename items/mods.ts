@@ -1,7 +1,13 @@
 import { modSortingScore } from "@/lib/utils"
 import _ from "lodash"
 import Items from "warframe-items"
-import type { Drop, ItemI18n, Mod } from "warframe-items"
+import type { ItemI18n, Mod } from "warframe-items"
+
+const items = new Items({
+  category: ["Mods"],
+  i18n: ["tc"],
+  i18nOnObject: true,
+}) as Mod[]
 
 const modDataExtractor = (v: Mod): ModData => {
   // @ts-expect-error
@@ -120,12 +126,6 @@ export const modSets = [
 ]
 
 export const getMods = () => {
-  const items = new Items({
-    category: ["Mods"],
-    i18n: ["tc"],
-    i18nOnObject: true,
-  }) as Mod[]
-
   const res: { [key: string]: ModData[] } = {}
 
   modSets.forEach(({ name, modFilter }) => {

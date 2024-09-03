@@ -2,7 +2,7 @@ import _ from "lodash"
 import Items from "warframe-items"
 import type { Drop, ItemI18n, Mod } from "warframe-items"
 
-type ModData = {
+export type ModData = {
   name: string
   description: string
   imageUrl: string

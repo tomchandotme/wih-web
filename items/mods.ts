@@ -57,7 +57,7 @@ const modSets = [
     name: "Orokin Vault Mods",
     modFilter: (v: Mod) =>
       v.drops?.some(
-        (d) => d.location === "Derelict Vault" && d.type === v.name,
+        (d) => d.location === "Derelict Vault" && d.type === v.name
       ),
   },
   {
@@ -65,7 +65,7 @@ const modSets = [
     modFilter: (v: Mod) =>
       v.drops?.some(
         (d) =>
-          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name,
+          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name
       ),
   },
   {
@@ -85,10 +85,10 @@ const modSets = [
     name: "Aura Mods",
     modFilter: (v: Mod) => v.compatName === "AURA" && v.type === "Warframe Mod",
   },
-  {
-    name: "Stance Mods",
-    modFilter: (v: Mod) => v.type === "Stance Mod",
-  },
+  // {
+  //   name: "Stance Mods",
+  //   modFilter: (v: Mod) => v.type === "Stance Mod",
+  // },
   {
     name: "Drift Mods",
     modFilter: (v: Mod) =>
@@ -101,6 +101,22 @@ const modSets = [
   {
     name: "Archon Mods",
     modFilter: (v: Mod) => v.name.startsWith("Archon "),
+  },
+  {
+    name: "Mods from Caches",
+    modFilter: (v: Mod) => {
+      const cachesSuffixes = [
+        "(Caches), Rotation A",
+        "(Caches), Rotation B",
+        "(Caches), Rotation C",
+      ]
+
+      return v.drops?.some(
+        (d) =>
+          cachesSuffixes.some((s) => d.location.endsWith(s)) &&
+          d.type === v.name
+      )
+    },
   },
 ]
 

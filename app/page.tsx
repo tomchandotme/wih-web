@@ -8,14 +8,17 @@ export default function Home() {
   const category = Object.keys(mods)
 
   return (
-    <div className="mx-auto w-max space-y-4 py-4">
+    <>
       {category.map((c) => {
         const modsCat = mods[c]
 
         return (
           <Fragment key={`section_${c}`}>
-            <h1>{c}</h1>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
+            <h1 className="mb-6 text-2xl font-bold" id={c}>
+              {c}
+            </h1>
+
+            <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {modsCat.map((m) => (
                 <ModCard key={`mod_card_${m.rawName}`} mod={m} />
               ))}
@@ -23,6 +26,6 @@ export default function Home() {
           </Fragment>
         )
       })}
-    </div>
+    </>
   )
 }

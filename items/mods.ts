@@ -28,7 +28,7 @@ const modDataExtractor = (v: Mod): ModData => {
       ? []
       : i18n.levelStats[i18n.levelStats.length - 1].stats
 
-  const description = lastStats.join(" ")
+  const description = lastStats.join(" ").replaceAll(/<DT_[A-Z]+>/g, "")
 
   const imageUrl = `https://cdn.warframestat.us/img/${v.imageName}`
 
@@ -54,6 +54,29 @@ const modDataExtractor = (v: Mod): ModData => {
   }
 }
 
+const modSortingScore = (m: ModData) => {
+  if (m.rarity === "Common") {
+    return 0
+  }
+  if (m.rarity === "Uncommon") {
+    return 1
+  }
+  if (m.rarity === "Rare") {
+    return 2
+  }
+  if (m.rarity === "Legendary") {
+    return 3
+  }
+  if (m.rawName.startsWith("Archon")) {
+    return 4
+  }
+  if (m.rawName.startsWith("Galvanized")) {
+    return 5
+  }
+
+  return 0
+}
+
 const excludedSuffixes = ["Beginner", "Intermediate", "Expert", "SubMod"]
 
 const modTypes = [
@@ -64,12 +87,12 @@ const modTypes = [
   "Melee Mod",
 ]
 
-const modSets = [
+export const modSets = [
   {
     name: "Orokin Vault Mods",
     modFilter: (v: Mod) =>
       v.drops?.some(
-        (d) => d.location === "Derelict Vault" && d.type === v.name
+        (d) => d.location === "Derelict Vault" && d.type === v.name,
       ),
   },
   {
@@ -77,7 +100,7 @@ const modSets = [
     modFilter: (v: Mod) =>
       v.drops?.some(
         (d) =>
-          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name
+          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name,
       ),
   },
   {
@@ -126,7 +149,7 @@ const modSets = [
       return v.drops?.some(
         (d) =>
           cachesSuffixes.some((s) => d.location.endsWith(s)) &&
-          d.type === v.name
+          d.type === v.name,
       )
     },
   },
@@ -169,6 +192,7 @@ export const getMods = () => {
     const mods = rawMods
       .filter((v) => !excludes.includes(v.uniqueName))
       .map(modDataExtractor)
+      .sort((a, b) => modSortingScore(b) - modSortingScore(a))
 
     res[name] = mods
   })

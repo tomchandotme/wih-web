@@ -54,7 +54,7 @@ const modDataExtractor = (v: Mod): ModData => {
   }
 }
 
-const excludedSuffixes = ["Beginner", "Expert", "SubMod"]
+const excludedSuffixes = ["Beginner", "Intermediate", "Expert", "SubMod"]
 
 const modTypes = [
   "Primary Mod",

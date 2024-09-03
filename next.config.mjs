@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   experimental: {
-    outputFileTracingIncludes: {
-      "/\\[mode\\]": ["./node_modules/warframe-items/data/**/*"],
-    },
+    turbotrace: {}, // This.
   },
   images: {
     remotePatterns: [

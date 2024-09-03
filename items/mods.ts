@@ -3,20 +3,6 @@ import _ from "lodash"
 import Items from "warframe-items"
 import type { Drop, ItemI18n, Mod } from "warframe-items"
 
-export type ModData = {
-  name: string
-  description: string
-  imageUrl: string
-  rawName: string
-  type: string
-  compatName?: string
-  rarity?: string
-  drops?: Drop[]
-  wikiaThumbnail?: string
-  wikiaUrl?: string
-  uniqueName: string
-}
-
 const modDataExtractor = (v: Mod): ModData => {
   // @ts-expect-error
   const i18n = v["i18n"]["tc"] as unknown as ItemI18n

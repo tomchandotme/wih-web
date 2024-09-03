@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { CheckIcon, PinIcon, ExternalLinkIcon } from "lucide-react"
 import Image from "next/image"
-import { ModData } from "@/items/mods"
 import { useModOwnlist, useModWishlist } from "@/store/atoms"
 import { cn } from "@/lib/utils"
 

@@ -1,4 +1,3 @@
-import { type ModData } from "@/items/mods"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 

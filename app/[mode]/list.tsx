@@ -1,7 +1,6 @@
 "use client"
 
 import { ModCard } from "@/components/modCard"
-import { type ModData } from "@/items/mods"
 import { modSortingScore } from "@/lib/utils"
 import { modOwnlistAtom, modWishlistAtom } from "@/store/atoms"
 import { useAtomValue } from "jotai"

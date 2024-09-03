@@ -54,6 +54,8 @@ const modDataExtractor = (v: Mod): ModData => {
   }
 }
 
+const excludedSuffixes = ["Beginner", "Expert", "SubMod"]
+
 const modTypes = [
   "Primary Mod",
   "Warframe Mod",
@@ -140,12 +142,35 @@ export const getMods = () => {
   const res: { [key: string]: ModData[] } = {}
 
   modSets.forEach(({ name, modFilter }) => {
-    const mods = items
+    const rawMods = items
       .filter(modFilter)
       .filter((m) => modTypes.includes(m.type))
+
+    const dupes: { [key: string]: Mod[] } = {}
+
+    const excludes: string[] = []
+
+    for (const mod of rawMods) {
+      dupes[mod.name] = [...(dupes[mod.name] || []), mod]
+    }
+
+    Object.entries(dupes).forEach(([_name, mods]) => {
+      if (mods.length > 1) {
+        mods.forEach((mod) => {
+          if (
+            excludedSuffixes.some((suffix) => mod.uniqueName.endsWith(suffix))
+          ) {
+            excludes.push(mod.uniqueName)
+          }
+        })
+      }
+    })
+
+    const mods = rawMods
+      .filter((v) => !excludes.includes(v.uniqueName))
       .map(modDataExtractor)
 
-    res[name] = _.sortBy(mods, (v) => v.compatName)
+    res[name] = mods
   })
 
   return res

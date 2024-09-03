@@ -1,3 +1,4 @@
+import { modSortingScore } from "@/lib/utils"
 import _ from "lodash"
 import Items from "warframe-items"
 import type { Drop, ItemI18n, Mod } from "warframe-items"
@@ -52,29 +53,6 @@ const modDataExtractor = (v: Mod): ModData => {
     wikiaUrl,
     uniqueName,
   }
-}
-
-const modSortingScore = (m: ModData) => {
-  if (m.rarity === "Common") {
-    return 0
-  }
-  if (m.rarity === "Uncommon") {
-    return 1
-  }
-  if (m.rarity === "Rare") {
-    return 2
-  }
-  if (m.rarity === "Legendary") {
-    return 3
-  }
-  if (m.rawName.startsWith("Archon")) {
-    return 4
-  }
-  if (m.rawName.startsWith("Galvanized")) {
-    return 5
-  }
-
-  return 0
 }
 
 const excludedSuffixes = ["Beginner", "Intermediate", "Expert", "SubMod"]

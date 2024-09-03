@@ -7,7 +7,5 @@ export default function ListPage({ params }: { params: { mode: string } }) {
     redirect("/")
   }
 
-  const allMods = getMods()
-
-  return <List mode={params.mode} allMods={allMods} />
+  return <List mode={params.mode} />
 }

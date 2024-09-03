@@ -2,7 +2,7 @@ import _ from "lodash"
 import Items from "warframe-items"
 import type { Drop, ItemI18n, Mod } from "warframe-items"
 
-export type ModData = {
+type ModData = {
   name: string
   description: string
   imageUrl: string
@@ -13,6 +13,7 @@ export type ModData = {
   drops?: Drop[]
   wikiaThumbnail?: string
   wikiaUrl?: string
+  uniqueName: string
 }
 
 const modDataExtractor = (v: Mod): ModData => {
@@ -31,7 +32,7 @@ const modDataExtractor = (v: Mod): ModData => {
 
   const imageUrl = `https://cdn.warframestat.us/img/${v.imageName}`
 
-  const { type, compatName, rarity, wikiaThumbnail, wikiaUrl } = v
+  const { type, compatName, rarity, wikiaThumbnail, wikiaUrl, uniqueName } = v
 
   const drops = v.drops?.filter((d) => d.type === v.name)
 
@@ -49,8 +50,17 @@ const modDataExtractor = (v: Mod): ModData => {
     drops,
     wikiaThumbnail,
     wikiaUrl,
+    uniqueName,
   }
 }
+
+const modTypes = [
+  "Primary Mod",
+  "Warframe Mod",
+  "Shotgun Mod",
+  "Secondary Mod",
+  "Melee Mod",
+]
 
 const modSets = [
   {
@@ -130,7 +140,10 @@ export const getMods = () => {
   const res: { [key: string]: ModData[] } = {}
 
   modSets.forEach(({ name, modFilter }) => {
-    const mods = items.filter(modFilter).map(modDataExtractor)
+    const mods = items
+      .filter(modFilter)
+      .filter((m) => modTypes.includes(m.type))
+      .map(modDataExtractor)
 
     res[name] = _.sortBy(mods, (v) => v.compatName)
   })

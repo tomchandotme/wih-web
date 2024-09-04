@@ -62,7 +62,7 @@ export const modSets = [
     name: "Orokin Vault Mods",
     modFilter: (v: Mod) =>
       v.drops?.some(
-        (d) => d.location === "Derelict Vault" && d.type === v.name,
+        (d) => d.location === "Derelict Vault" && d.type === v.name
       ),
   },
   {
@@ -70,7 +70,7 @@ export const modSets = [
     modFilter: (v: Mod) =>
       v.drops?.some(
         (d) =>
-          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name,
+          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name
       ),
   },
   {
@@ -108,6 +108,11 @@ export const modSets = [
     modFilter: (v: Mod) => v.name.startsWith("Archon "),
   },
   {
+    name: "Arbitration Mods",
+    modFilter: (v: Mod) =>
+      v.drops.some((v) => v.location.startsWith("Arbitrations")),
+  },
+  {
     name: "Mods from Caches",
     modFilter: (v: Mod) => {
       const cachesSuffixes = [
@@ -119,7 +124,7 @@ export const modSets = [
       return v.drops?.some(
         (d) =>
           cachesSuffixes.some((s) => d.location.endsWith(s)) &&
-          d.type === v.name,
+          d.type === v.name
       )
     },
   },

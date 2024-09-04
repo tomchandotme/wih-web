@@ -110,7 +110,9 @@ export const modSets = [
   {
     name: "Arbitration Mods",
     modFilter: (v: Mod) =>
-      v.drops.some((v) => v.location.startsWith("Arbitrations")),
+      v.drops?.some(
+        (d) => d.location.startsWith("Arbitrations") && d.type === v.name
+      ),
   },
   {
     name: "Mods from Caches",

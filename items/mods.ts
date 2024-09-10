@@ -136,6 +136,13 @@ export const modSets = [
       )
     },
   },
+  {
+    name: "Arbitrations Mods",
+    modFilter: (v: Mod) =>
+      v.drops?.some(
+        (d) => d.location.startsWith("Arbitrations") && d.type === v.name
+      ),
+  },
 ]
 
 export const getMods = () => {

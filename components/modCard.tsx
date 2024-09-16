@@ -3,10 +3,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { CheckIcon, PinIcon, ExternalLinkIcon } from "lucide-react"
+import { CheckIcon, PinIcon, ExternalLinkIcon, Store } from "lucide-react"
 import Image from "next/image"
 import { useModOwnlist, useModWishlist } from "@/store/atoms"
 import { cn } from "@/lib/utils"
+import _ from "lodash"
 
 export const ModCard = ({
   mod,
@@ -106,6 +107,21 @@ export const ModCard = ({
               aria-label="Open Wiki page"
             >
               <ExternalLinkIcon className="h-4 w-4" />
+            </Button>
+          )}
+          {mod.tradable && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                window.open(
+                  `https://warframe.market/items/${_.snakeCase(mod.rawName)}`,
+                  "_blank",
+                )
+              }
+              aria-label="Open Warframe.market"
+            >
+              <Store className="h-4 w-4" />
             </Button>
           )}
         </div>

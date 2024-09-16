@@ -10,4 +10,5 @@ type ModData = {
   wikiaThumbnail?: string
   wikiaUrl?: string
   uniqueName: string
+  tradable: boolean
 }

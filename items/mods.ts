@@ -25,7 +25,15 @@ const modDataExtractor = (v: Mod): ModData => {
 
   const imageUrl = `https://cdn.warframestat.us/img/${v.imageName}`
 
-  const { type, compatName, rarity, wikiaThumbnail, wikiaUrl, uniqueName } = v
+  const {
+    type,
+    compatName,
+    rarity,
+    wikiaThumbnail,
+    wikiaUrl,
+    uniqueName,
+    tradable,
+  } = v
 
   const drops = v.drops?.filter((d) => d.type === v.name)
 
@@ -44,6 +52,7 @@ const modDataExtractor = (v: Mod): ModData => {
     wikiaThumbnail,
     wikiaUrl,
     uniqueName,
+    tradable,
   }
 }
 
@@ -68,7 +77,7 @@ export const modSets = [
     name: "Orokin Vault Mods",
     modFilter: (v: Mod) =>
       v.drops?.some(
-        (d) => d.location === "Derelict Vault" && d.type === v.name
+        (d) => d.location === "Derelict Vault" && d.type === v.name,
       ),
   },
   {
@@ -76,7 +85,7 @@ export const modSets = [
     modFilter: (v: Mod) =>
       v.drops?.some(
         (d) =>
-          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name
+          d.location.startsWith("Nightmare Mode Rewards") && d.type === v.name,
       ),
   },
   {
@@ -117,7 +126,7 @@ export const modSets = [
     name: "Arbitration Mods",
     modFilter: (v: Mod) =>
       v.drops?.some(
-        (d) => d.location.startsWith("Arbitrations") && d.type === v.name
+        (d) => d.location.startsWith("Arbitrations") && d.type === v.name,
       ),
   },
   {
@@ -132,7 +141,7 @@ export const modSets = [
       return v.drops?.some(
         (d) =>
           cachesSuffixes.some((s) => d.location.endsWith(s)) &&
-          d.type === v.name
+          d.type === v.name,
       )
     },
   },
@@ -140,7 +149,7 @@ export const modSets = [
     name: "Arbitrations Mods",
     modFilter: (v: Mod) =>
       v.drops?.some(
-        (d) => d.location.startsWith("Arbitrations") && d.type === v.name
+        (d) => d.location.startsWith("Arbitrations") && d.type === v.name,
       ),
   },
 ]

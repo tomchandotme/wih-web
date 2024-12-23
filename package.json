@@ -23,7 +23,7 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "warframe-items": "^1.1265.3"
+    "warframe-items": "^1.1265.10"
   },
   "devDependencies": {
     "@types/node": "^20",

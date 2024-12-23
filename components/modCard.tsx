@@ -22,7 +22,7 @@ export const ModCard = ({
   const { isOwned, toggleOwnList } = useModOwnlist(mod.rawName)
 
   return (
-    <Card className="relative flex flex-row overflow-hidden pl-4">
+    <Card className="relative flex flex-row overflow-hidden pl-4 hover:shadow-md">
       <div
         className={cn("absolute left-0 top-0 h-full w-4", {
           "bg-yellow-700": mod.rarity === "Common",
@@ -116,7 +116,7 @@ export const ModCard = ({
               onClick={() =>
                 window.open(
                   `https://warframe.market/items/${_.snakeCase(mod.rawName)}`,
-                  "_blank",
+                  "_blank"
                 )
               }
               aria-label="Open Warframe.market"

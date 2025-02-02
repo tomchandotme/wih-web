@@ -1,0 +1,8 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/" # Location of your package.json
+    schedule:
+      interval: "weekly" # Options: "daily", "weekly", "monthly"
+    allow:
+      - dependency-name: "warframe-items"

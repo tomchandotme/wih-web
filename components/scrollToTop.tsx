@@ -3,7 +3,7 @@ import { ArrowUp } from "lucide-react"
 import { Button } from "./ui/button"
 
 export const ScrollToTop = () => (
-  <div className="fixed bottom-2 right-2 z-50 shadow">
+  <div className="fixed right-2 bottom-2 z-50 shadow-sm">
     <Button
       variant="outline"
       size="icon"

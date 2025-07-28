@@ -1,4 +1,4 @@
-import { modSortingScore } from "@/lib/utils"
+import { modSortingScore, replacePlaceholdersWithEmojis } from "@/lib/utils"
 import _ from "lodash"
 import Items from "warframe-items"
 import type { ItemI18n, Mod } from "warframe-items"
@@ -21,7 +21,9 @@ const modDataExtractor = (v: Mod): ModData => {
       ? []
       : i18n.levelStats[i18n.levelStats.length - 1].stats
 
-  const description = lastStats.join(" ").replaceAll(/<DT_[A-Z]+>/g, "")
+  const description = replacePlaceholdersWithEmojis(lastStats.join(" "))
+    .trim()
+    .replace("\\n", "\n")
 
   const imageUrl = `https://cdn.warframestat.us/img/${v.imageName}`
 

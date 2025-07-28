@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { CheckIcon, PinIcon, ExternalLinkIcon, Store } from "lucide-react"
-import Image from "next/image"
 import { useModOwnlist, useModWishlist } from "@/store/atoms"
 import { cn } from "@/lib/utils"
 import _ from "lodash"
@@ -24,7 +23,7 @@ export const ModCard = ({
   return (
     <Card className="relative flex flex-row overflow-hidden pl-4 hover:shadow-md">
       <div
-        className={cn("absolute left-0 top-0 h-full w-4", {
+        className={cn("absolute top-0 left-0 h-full w-4", {
           "bg-yellow-700": mod.rarity === "Common",
           "bg-zinc-400": mod.rarity === "Uncommon",
           "bg-amber-300": mod.rarity === "Rare",
@@ -33,31 +32,36 @@ export const ModCard = ({
           "bg-slate-400": mod.rawName.startsWith("Galvanized"),
         })}
       />
-      <div className="flex-grow">
+      <div className="grow">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             {mod.name}
-            <Badge variant="secondary">{mod.compatName?.toUpperCase()}</Badge>
+            <Badge variant="secondary" className="font-mono">
+              {mod.compatName?.toUpperCase()}
+            </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex items-center">
-            <Image
+            <img
               src={mod.imageUrl}
               alt={mod.name}
               width={100}
               height={100}
               className="mr-4"
+              loading="lazy"
             />
             <div>
-              <p className="mb-2 text-sm">{mod.description}</p>
+              <p className="mb-2 text-sm whitespace-pre-line tabular-nums">
+                {mod.description}
+              </p>
             </div>
           </div>
 
           <div className="flex gap-2">
             <Badge
               variant="outline"
-              className={cn("mr-2", {
+              className={cn("mr-2 font-mono", {
                 "bg-yellow-700 text-white": mod.rarity === "Common",
                 "bg-zinc-400": mod.rarity === "Uncommon",
                 "bg-amber-300": mod.rarity === "Rare",
@@ -116,7 +120,7 @@ export const ModCard = ({
               onClick={() =>
                 window.open(
                   `https://warframe.market/items/${_.snakeCase(mod.rawName)}`,
-                  "_blank"
+                  "_blank",
                 )
               }
               aria-label="Open Warframe.market"

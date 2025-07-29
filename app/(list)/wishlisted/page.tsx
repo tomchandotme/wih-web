@@ -1,5 +1,8 @@
+import { getMods } from "@/items/mods"
 import { List } from "@/layouts/list"
 
 export default function ListPage() {
-  return <List mode={"wishlisted"} />
+  const allMods = getMods()
+
+  return <List mode={"owned"} allMods={allMods} />
 }

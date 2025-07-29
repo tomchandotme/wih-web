@@ -6,20 +6,17 @@ import { modOwnlistAtom, modWishlistAtom } from "@/store/atoms"
 import { useAtomValue } from "jotai"
 import _ from "lodash"
 import { useMemo } from "react"
-import useSWR from "swr"
 
 type ListProps = {
   mode: "owned" | "wishlisted"
+  allMods: {
+    [key: string]: ModData[]
+  }
 }
 
-export const List = ({ mode }: ListProps) => {
+export const List = ({ mode, allMods }: ListProps) => {
   const modsWishlisted = useAtomValue(modWishlistAtom)
   const modsOwned = useAtomValue(modOwnlistAtom)
-
-  const { data: allMods, isLoading } = useSWR<{ [key: string]: ModData[] }>(
-    "/api/mods",
-    (url: string) => fetch(url).then((r) => r.json()),
-  )
 
   const modsToShowed = useMemo(() => {
     if (!allMods) return []
@@ -35,10 +32,6 @@ export const List = ({ mode }: ListProps) => {
       )
       .sort((a, b) => modSortingScore(b) - modSortingScore(a))
   }, [allMods, mode, modsOwned, modsWishlisted])
-
-  if (isLoading) {
-    return null
-  }
 
   return (
     <div>

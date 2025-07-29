@@ -5,7 +5,7 @@ import { modSortingScore } from "@/lib/utils"
 import { modOwnlistAtom, modWishlistAtom } from "@/store/atoms"
 import { useAtomValue } from "jotai"
 import _ from "lodash"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 type ListProps = {
   mode: "owned" | "wishlisted"
@@ -15,11 +15,13 @@ type ListProps = {
 }
 
 export const List = ({ mode, allMods }: ListProps) => {
+  const [isMounted, setIsMounted] = useState(false)
+
   const modsWishlisted = useAtomValue(modWishlistAtom)
   const modsOwned = useAtomValue(modOwnlistAtom)
 
   const modsToShowed = useMemo(() => {
-    if (!allMods) return []
+    if (!allMods || !isMounted) return []
 
     return _.uniqBy(
       Object.values(allMods).flatMap((v) => v),
@@ -31,7 +33,11 @@ export const List = ({ mode, allMods }: ListProps) => {
           : modsWishlisted.includes(v.rawName),
       )
       .sort((a, b) => modSortingScore(b) - modSortingScore(a))
-  }, [allMods, mode, modsOwned, modsWishlisted])
+  }, [allMods, mode, JSON.stringify(modsOwned), JSON.stringify(modsWishlisted)])
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   return (
     <div>

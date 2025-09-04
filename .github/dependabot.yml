@@ -5,4 +5,4 @@ updates:
     schedule:
       interval: "monthly" # Options: "daily", "weekly", "monthly"
     allow:
-      - dependency-name: "warframe-items"
+      - dependency-name: "@wfcd/items"

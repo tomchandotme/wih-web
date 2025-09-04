@@ -1,7 +1,7 @@
 import { modSortingScore, replacePlaceholdersWithEmojis } from "@/lib/utils"
 import _ from "lodash"
-import Items from "warframe-items"
-import type { ItemI18n, Mod } from "warframe-items"
+import Items from "@wfcd/items"
+import type { ItemI18n, Mod } from "@wfcd/items"
 
 const items = new Items({
   category: ["Mods"],

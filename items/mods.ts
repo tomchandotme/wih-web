@@ -113,10 +113,6 @@ export const modSets = [
     name: "Aura Mods",
     modFilter: (v: Mod) => v.compatName === "AURA" && v.type === "Warframe Mod",
   },
-  // {
-  //   name: "Stance Mods",
-  //   modFilter: (v: Mod) => v.type === "Stance Mod",
-  // },
   {
     name: "Drift Mods",
     modFilter: (v: Mod) =>
@@ -129,13 +125,6 @@ export const modSets = [
   {
     name: "Archon Mods",
     modFilter: (v: Mod) => v.name.startsWith("Archon "),
-  },
-  {
-    name: "Arbitration Mods",
-    modFilter: (v: Mod) =>
-      v.drops?.some(
-        (d) => d.location.startsWith("Arbitrations") && d.type === v.name,
-      ),
   },
   {
     name: "Mods from Caches",

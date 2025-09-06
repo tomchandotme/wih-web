@@ -91,7 +91,7 @@ export const ModCard = ({
           {mod.drops && mod.drops.length > 0 && (
             <Collapsible onOpenChange={setShowDrops} open={showDrops}>
               <CollapsibleTrigger>
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex cursor-pointer items-center justify-center gap-2">
                   <span className="font font-mono text-sm font-medium">
                     Drops
                   </span>

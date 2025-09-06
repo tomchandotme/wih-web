@@ -19,6 +19,7 @@ import { useModOwnlist, useModWishlist } from "@/store/atoms"
 import { cn } from "@/lib/utils"
 import _ from "lodash"
 import { useState } from "react"
+import { ModData } from "@/types"
 
 export const ModCard = ({
   mod,
@@ -101,9 +102,15 @@ export const ModCard = ({
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <ul className="list-inside list-disc font-mono text-xs">
-                  {mod.drops.map((drop, index) => (
-                    <li key={index}>{drop.location}</li>
-                  ))}
+                  {mod.drops.map((drop, index) => {
+                    const { location, chance } = drop
+
+                    const displayText = chance
+                      ? `${drop.location} (${((drop.chance || 0) * 100).toFixed(2)}%)`
+                      : location
+
+                    return <li key={index}>{displayText}</li>
+                  })}
                 </ul>
               </CollapsibleContent>
             </Collapsible>

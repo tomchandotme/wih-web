@@ -1,4 +1,6 @@
-type ModData = {
+import type { Drop } from "@wfcd/items"
+
+export type ModData = {
   name: string
   description: string
   imageUrl: string

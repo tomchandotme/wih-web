@@ -3,6 +3,7 @@
 import { ModCard } from "@/components/modCard"
 import { modSortingScore } from "@/lib/utils"
 import { modOwnlistAtom, modWishlistAtom } from "@/store/atoms"
+import { ModData } from "@/types"
 import { useAtomValue } from "jotai"
 import _ from "lodash"
 import { useEffect, useMemo, useState } from "react"

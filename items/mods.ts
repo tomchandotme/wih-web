@@ -2,6 +2,7 @@ import { modSortingScore, replacePlaceholdersWithEmojis } from "@/lib/utils"
 import _ from "lodash"
 import Items from "@wfcd/items"
 import type { ItemI18n, Mod } from "@wfcd/items"
+import { ModData } from "@/types"
 
 const items = new Items({
   category: ["Mods"],
@@ -38,7 +39,9 @@ const modDataExtractor = (v: Mod): ModData => {
     tradable,
   } = v
 
-  const drops = v.drops?.filter((d) => d.type === v.name)
+  const drops = v.drops
+    ?.filter((d) => d.type === v.name)
+    .sort((a, b) => (b.chance || 0) - (a.chance || 0))
 
   const rawName = v.name
 

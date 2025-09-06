@@ -20,7 +20,7 @@ export default function Home() {
 
             <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {modsCat.map((m) => (
-                <ModCard key={`mod_card_${m.rawName}`} mod={m} />
+                <ModCard key={`${c}_mod_card_${m.rawName}`} mod={m} />
               ))}
             </div>
           </Fragment>

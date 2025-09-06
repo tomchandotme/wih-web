@@ -21,9 +21,10 @@ const modDataExtractor = (v: Mod): ModData => {
       ? []
       : i18n.levelStats[i18n.levelStats.length - 1].stats
 
-  const description = replacePlaceholdersWithEmojis(lastStats.join(" "))
-    .trim()
-    .replace("\\n", "\n")
+  const description =
+    replacePlaceholdersWithEmojis(lastStats.join(" "))
+      .trim()
+      .replace("\\n", "\n") || i18n.description
 
   const imageUrl = `https://cdn.warframestat.us/img/${v.imageName}`
 
@@ -64,6 +65,7 @@ const excludedSuffixes = [
   "Expert",
   "SubMod",
   "AvatarSentientArmourMod",
+  "OnHeavyKillMod",
 ]
 
 const modTypes = [
@@ -72,6 +74,7 @@ const modTypes = [
   "Shotgun Mod",
   "Secondary Mod",
   "Melee Mod",
+  "Stance Mod",
 ]
 
 export const modSets = [
@@ -134,16 +137,16 @@ export const modSets = [
   {
     name: "Mods from Caches",
     modFilter: (v: Mod) => {
-      const cachesSuffixes = [
-        "(Caches), Rotation A",
-        "(Caches), Rotation B",
-        "(Caches), Rotation C",
-      ]
-
       return v.drops?.some(
-        (d) =>
-          cachesSuffixes.some((s) => d.location.endsWith(s)) &&
-          d.type === v.name,
+        (d) => d.location.includes("Caches") && d.type === v.name,
+      )
+    },
+  },
+  {
+    name: "Mods from Bounties",
+    modFilter: (v: Mod) => {
+      return v.drops?.some(
+        (d) => d.location.includes("Bounty") && d.type === v.name,
       )
     },
   },

@@ -34,7 +34,7 @@ export const List = ({ mode, allMods }: ListProps) => {
           : modsWishlisted.includes(v.rawName),
       )
       .sort((a, b) => modSortingScore(b) - modSortingScore(a))
-  }, [allMods, mode, JSON.stringify(modsOwned), JSON.stringify(modsWishlisted)])
+  }, [allMods, isMounted, mode, modsOwned, modsWishlisted])
 
   useEffect(() => {
     setIsMounted(true)

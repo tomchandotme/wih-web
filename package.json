@@ -12,7 +12,7 @@
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-slot": "^1.2.4",
     "@types/lodash": "^4.17.21",
-    "@wfcd/items": "^1.1272.72",
+    "@wfcd/items": "^1.1272.88",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "jotai": "^2.16.0",

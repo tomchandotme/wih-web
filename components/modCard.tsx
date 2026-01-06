@@ -137,9 +137,10 @@ export const ModCard = ({
           </Button>
 
           <Button
+            className={cn({ "opacity-50": !mod.wikiaUrl })}
             variant="outline"
             size="icon"
-            asChild
+            asChild={!!mod.wikiaUrl}
             disabled={!mod.wikiaUrl}
           >
             {mod.wikiaUrl ? (
@@ -157,9 +158,10 @@ export const ModCard = ({
           </Button>
 
           <Button
+            className={cn({ "opacity-50": !mod.tradable })}
             variant="outline"
             size="icon"
-            asChild
+            asChild={!!mod.tradable}
             disabled={!mod.tradable}
           >
             {mod.tradable ? (

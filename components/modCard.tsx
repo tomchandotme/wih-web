@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils"
 import _ from "lodash"
 import { useState } from "react"
 import { ModData } from "@/types"
+import { RARITY_COLORS } from "@/lib/constants"
 
 export const ModCard = ({
   mod,
@@ -35,18 +36,26 @@ export const ModCard = ({
   const { isWishlisted, toggleWishlist } = useModWishlist(mod.rawName)
   const { isOwned, toggleOwnList } = useModOwnlist(mod.rawName)
 
+  const rarityColor = mod.rarity ? RARITY_COLORS[mod.rarity] : ""
+  const isArchon = mod.rawName.startsWith("Archon")
+  const isGalvanized = mod.rawName.startsWith("Galvanized")
+
+  const sideBarColor = cn("absolute top-0 left-0 h-full w-4", {
+    [rarityColor]: !!rarityColor,
+    "bg-orange-200": isArchon,
+    "bg-slate-400": isGalvanized,
+  })
+
+  const badgeColor = cn("mr-2 font-mono", {
+    [rarityColor]: !!rarityColor,
+    "text-white": mod.rarity === "Common",
+    "bg-orange-200": isArchon,
+    "bg-slate-400": isGalvanized,
+  })
+
   return (
     <Card className="relative flex flex-row overflow-hidden pl-4 hover:shadow-md">
-      <div
-        className={cn("absolute top-0 left-0 h-full w-4", {
-          "bg-yellow-700": mod.rarity === "Common",
-          "bg-zinc-400": mod.rarity === "Uncommon",
-          "bg-amber-300": mod.rarity === "Rare",
-          "bg-zinc-200": mod.rarity === "Legendary",
-          "bg-orange-200": mod.rawName.startsWith("Archon"),
-          "bg-slate-400": mod.rawName.startsWith("Galvanized"),
-        })}
-      />
+      <div className={sideBarColor} />
       <div className="grow">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
@@ -74,17 +83,7 @@ export const ModCard = ({
           </div>
 
           <div className="flex gap-2">
-            <Badge
-              variant="outline"
-              className={cn("mr-2 font-mono", {
-                "bg-yellow-700 text-white": mod.rarity === "Common",
-                "bg-zinc-400": mod.rarity === "Uncommon",
-                "bg-amber-300": mod.rarity === "Rare",
-                "bg-zinc-200": mod.rarity === "Legendary",
-                "bg-orange-200": mod.rawName.startsWith("Archon"),
-                "bg-slate-400": mod.rawName.startsWith("Galvanized"),
-              })}
-            >
+            <Badge variant="outline" className={badgeColor}>
               {mod.rarity}
             </Badge>
           </div>
@@ -138,28 +137,45 @@ export const ModCard = ({
           </Button>
 
           <Button
+            className={cn({ "opacity-50": !mod.wikiaUrl })}
             variant="outline"
             size="icon"
-            onClick={() => window.open(mod.wikiaUrl, "_blank")}
-            aria-label="Open Wiki page"
+            asChild={!!mod.wikiaUrl}
             disabled={!mod.wikiaUrl}
           >
-            <BookOpenTextIcon className="size-4" />
+            {mod.wikiaUrl ? (
+              <a
+                href={mod.wikiaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Wiki page"
+              >
+                <BookOpenTextIcon className="size-4" />
+              </a>
+            ) : (
+              <BookOpenTextIcon className="size-4" />
+            )}
           </Button>
 
           <Button
+            className={cn({ "opacity-50": !mod.tradable })}
             variant="outline"
             size="icon"
-            onClick={() =>
-              window.open(
-                `https://warframe.market/items/${_.snakeCase(mod.rawName)}`,
-                "_blank",
-              )
-            }
-            aria-label="Open Warframe.market"
+            asChild={!!mod.tradable}
             disabled={!mod.tradable}
           >
-            <Store className="size-4" />
+            {mod.tradable ? (
+              <a
+                href={`https://warframe.market/items/${_.snakeCase(mod.rawName)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Warframe.market"
+              >
+                <Store className="size-4" />
+              </a>
+            ) : (
+              <Store className="size-4" />
+            )}
           </Button>
         </div>
       )}

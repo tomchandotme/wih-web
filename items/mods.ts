@@ -1,18 +1,22 @@
 import { modSortingScore, replacePlaceholdersWithEmojis } from "@/lib/utils"
-import _ from "lodash"
 import Items from "@wfcd/items"
 import type { ItemI18n, Mod } from "@wfcd/items"
 import { ModData } from "@/types"
+
+type ExtendedMod = Omit<Mod, "i18n"> & {
+  i18n?: {
+    tc?: ItemI18n
+  }
+}
 
 const items = new Items({
   category: ["Mods"],
   i18n: ["tc"],
   i18nOnObject: true,
-}) as Mod[]
+}) as unknown as ExtendedMod[]
 
-const modDataExtractor = (v: Mod): ModData => {
-  // @ts-expect-error
-  const i18n = v["i18n"]["tc"] as unknown as ItemI18n
+const modDataExtractor = (v: ExtendedMod): ModData => {
+  const i18n = v.i18n?.tc || ({} as ItemI18n)
 
   const name =
     i18n.name && i18n.name !== v.name ? `${i18n.name} (${v.name})` : v.name
@@ -155,11 +159,11 @@ export const getMods = () => {
   const res: { [key: string]: ModData[] } = {}
 
   modSets.forEach(({ name, modFilter }) => {
-    const rawMods = items
+    const rawMods = (items as unknown as Mod[])
       .filter(modFilter)
-      .filter((m) => modTypes.includes(m.type))
+      .filter((m) => modTypes.includes(m.type)) as unknown as ExtendedMod[]
 
-    const dupes: { [key: string]: Mod[] } = {}
+    const dupes: { [key: string]: ExtendedMod[] } = {}
 
     const excludes: string[] = []
 

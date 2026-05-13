@@ -29,7 +29,7 @@ const modDataExtractor = (v: ExtendedMod): ModData => {
   const description =
     replacePlaceholdersWithEmojis(lastStats.join(" "))
       .trim()
-      .replace("\\n", "\n") || i18n.description
+      .replaceAll("\\n", "\n") || i18n.description
 
   const imageUrl = `https://cdn.warframestat.us/img/${v.imageName}`
 

@@ -126,7 +126,7 @@ export const ModCard = ({
                     const { location, chance } = drop
 
                     const displayText = chance
-                      ? `${drop.location} (${((drop.chance || 0) * 100).toFixed(2)}%)`
+                      ? `${drop.location} (${(drop.chance || 0).toFixed(2)}%)`
                       : location
 
                     return <li key={index}>{displayText}</li>

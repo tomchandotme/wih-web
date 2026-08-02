@@ -27,10 +27,12 @@ export const ModCard = ({
   mod,
   hideAction,
   showDrops: initShowDrops,
+  priority,
 }: {
   mod: ModData
   hideAction?: boolean
   showDrops?: boolean
+  priority?: boolean
 }) => {
   const [showDrops, setShowDrops] = useState(initShowDrops)
 
@@ -79,6 +81,7 @@ export const ModCard = ({
               width={100}
               height={100}
               className="mr-4"
+              priority={priority}
             />
             <div>
               <p className="mb-2 text-sm whitespace-pre-line tabular-nums">

@@ -2,6 +2,9 @@
 
 import { ModCard } from "@/components/modCard"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { matchesModQuery } from "@/lib/utils"
 import { modOwnlistAtom } from "@/store/atoms"
 import { ModData } from "@/types"
@@ -45,23 +48,24 @@ export const HomeMods = ({ mods }: HomeModsProps) => {
   return (
     <>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input
+        <Input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search mods…"
           aria-label="Search mods"
-          className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden sm:max-w-sm"
+          className="sm:max-w-sm"
         />
-        <label className="flex cursor-pointer items-center gap-2 text-sm">
-          <input
-            type="checkbox"
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="unowned-only"
             checked={unownedOnly}
-            onChange={(e) => setUnownedOnly(e.target.checked)}
-            className="size-4"
+            onCheckedChange={(checked) => setUnownedOnly(checked === true)}
           />
-          Unowned only
-        </label>
+          <Label htmlFor="unowned-only" className="cursor-pointer font-normal">
+            Unowned only
+          </Label>
+        </div>
         {(query || unownedOnly) && (
           <Button
             variant="ghost"

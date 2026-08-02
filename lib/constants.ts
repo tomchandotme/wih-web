@@ -92,8 +92,8 @@ export const TYPE_SCORES: Record<string, number> = {
 }
 
 export const RARITY_COLORS: Record<string, string> = {
-  Common: "bg-yellow-700",
-  Uncommon: "bg-zinc-400",
-  Rare: "bg-amber-300",
-  Legendary: "bg-zinc-200",
+  Common: "bg-rarity-common",
+  Uncommon: "bg-rarity-uncommon",
+  Rare: "bg-rarity-rare",
+  Legendary: "bg-rarity-legendary",
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
@@ -79,41 +80,49 @@ export const SiteNav = ({ categories }: SiteNavProps) => {
     }
   }, [isHome, categories])
 
+  const linkClass = (active: boolean) =>
+    cn(
+      "h-auto shrink-0 rounded-none border-b-2 border-transparent px-3 py-3 font-mono text-xs tracking-wide uppercase transition-colors",
+      active
+        ? "border-brand text-foreground"
+        : "text-muted-foreground hover:text-foreground",
+    )
+
   return (
     <div
       ref={navRef}
-      className="bg-background/95 sticky top-0 z-20 border-b backdrop-blur-sm"
+      className="bg-background/90 sticky top-0 z-20 border-b backdrop-blur-sm"
     >
-      <div className="container mx-auto flex flex-nowrap items-center justify-start gap-2 overflow-x-auto px-4 py-3 md:py-4">
+      <div className="container mx-auto flex flex-nowrap items-stretch justify-start gap-1 overflow-x-auto px-4">
         {categories.map((c) => (
           <Button
-            variant={isHome && activeSection === c ? "default" : "ghost"}
+            variant="ghost"
             size="sm"
             key={`button_${c}`}
-            className="shrink-0"
+            className={linkClass(isHome && activeSection === c)}
             asChild
           >
             <Link href={`/#${c}`}>{navLabel(c)}</Link>
           </Button>
         ))}
         <Button
-          variant={pathname === "/owned" ? "default" : "ghost"}
+          variant="ghost"
           size="sm"
-          className="shrink-0"
+          className={linkClass(pathname === "/owned")}
           asChild
         >
           <Link href="/owned">Owned</Link>
         </Button>
         <Button
-          variant={pathname === "/wishlisted" ? "default" : "ghost"}
+          variant="ghost"
           size="sm"
-          className="shrink-0"
+          className={linkClass(pathname === "/wishlisted")}
           asChild
         >
           <Link href="/wishlisted">Wishlisted</Link>
         </Button>
         {!isHome && (
-          <Button variant="ghost" size="sm" className="shrink-0" asChild>
+          <Button variant="ghost" size="sm" className={linkClass(false)} asChild>
             <Link href="/">All Mods</Link>
           </Button>
         )}

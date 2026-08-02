@@ -49,58 +49,72 @@ export const HomeMods = ({ mods }: HomeModsProps) => {
   return (
     <>
       <h1 className="sr-only">Warframe Mods</h1>
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="border-border/80 bg-card/60 mb-8 flex flex-col gap-3 rounded-md border px-3 py-3 sm:flex-row sm:items-center">
         <Input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search mods…"
           aria-label="Search mods"
-          className="sm:max-w-sm"
+          className="border-border/80 bg-background sm:max-w-sm"
         />
-        <div className="flex items-center gap-2">
-          <Checkbox
-            id="unowned-only"
-            checked={unownedOnly}
-            onCheckedChange={(checked) => setUnownedOnly(checked === true)}
-          />
-          <Label htmlFor="unowned-only" className="cursor-pointer font-normal">
-            Unowned only
-          </Label>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="unowned-only"
+              checked={unownedOnly}
+              onCheckedChange={(checked) => setUnownedOnly(checked === true)}
+            />
+            <Label
+              htmlFor="unowned-only"
+              className="cursor-pointer text-sm leading-none font-normal"
+            >
+              Unowned only
+            </Label>
+          </div>
+          {filtersActive && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground h-auto px-0 py-0 text-sm leading-none font-normal hover:bg-transparent"
+              onClick={() => {
+                setQuery("")
+                setUnownedOnly(false)
+              }}
+            >
+              Clear
+            </Button>
+          )}
         </div>
-        {filtersActive && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              setQuery("")
-              setUnownedOnly(false)
-            }}
-          >
-            Clear
-          </Button>
+        {filtersActive && totalShown > 0 && (
+          <p className="text-muted-foreground font-mono text-xs sm:ml-auto">
+            {totalShown} mods
+          </p>
         )}
       </div>
 
-      {filtersActive && totalShown > 0 && (
-        <p className="text-muted-foreground mb-4 text-sm">
-          Showing {totalShown} mods
-        </p>
-      )}
-
       {totalShown === 0 ? (
-        <p className="text-muted-foreground text-sm">No mods match your filters.</p>
+        <p className="text-muted-foreground text-sm">
+          No mods match your filters.
+        </p>
       ) : (
         filteredCategories.map((c, categoryIndex) => {
           const modsCat = filtered[c]
 
           return (
             <Fragment key={`section_${c}`}>
-              <h2 className="mb-6 text-2xl font-bold" id={c}>
+              <h2
+                className="mb-5 flex items-center gap-3 text-xl font-semibold tracking-tight"
+                id={c}
+              >
+                <span
+                  className="bg-brand h-5 w-1 shrink-0 rounded-full"
+                  aria-hidden
+                />
                 {c}
               </h2>
 
-              <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mb-10 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {modsCat.map((m, index) => (
                   <ModCard
                     key={`${c}_mod_card_${m.rawName}`}

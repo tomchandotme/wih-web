@@ -59,21 +59,24 @@ export const ModCard = ({
   return (
     <Card
       className={cn(
-        "relative flex flex-row overflow-hidden pl-4 hover:shadow-md",
-        isOwned && "bg-muted/50",
+        "relative flex flex-row overflow-hidden pl-4 shadow-none transition-[border-color,background-color] duration-200 hover:border-brand/40",
+        isOwned && "bg-muted/40",
       )}
     >
       <div className={sideBarColor} />
       <div className={cn("grow", isOwned && "opacity-70")}>
-        <CardHeader>
-          <CardTitle className="flex flex-wrap items-center justify-between gap-2 text-lg">
+        <CardHeader className="px-4 pt-4 pb-3">
+          <CardTitle className="flex flex-wrap items-center justify-between gap-2 text-base">
             <span className="min-w-0">{mod.name}</span>
-            <Badge variant="secondary" className="shrink-0 font-mono">
+            <Badge
+              variant="secondary"
+              className="shrink-0 rounded-sm font-mono text-[10px] tracking-wide"
+            >
               {mod.compatName?.toUpperCase()}
             </Badge>
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-3 px-4 pb-4">
           <div className="flex items-center">
             <Image
               src={mod.imageUrl}
@@ -91,11 +94,14 @@ export const ModCard = ({
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Badge variant="outline" className={badgeColor}>
+            <Badge variant="outline" className={cn("rounded-sm", badgeColor)}>
               {mod.rarity}
             </Badge>
             {isOwned && (
-              <Badge variant="secondary" className="font-mono">
+              <Badge
+                variant="secondary"
+                className="rounded-sm font-mono text-[10px] tracking-wide"
+              >
                 Owned
               </Badge>
             )}
@@ -103,15 +109,19 @@ export const ModCard = ({
           {mod.drops && mod.drops.length > 0 && (
             <Collapsible onOpenChange={setShowDrops} open={showDrops}>
               <CollapsibleTrigger>
-                <div className="flex cursor-pointer items-center justify-center gap-2">
-                  <span className="font-mono text-sm font-medium">Drops</span>
+                <div className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-2 transition-colors">
+                  <span className="font-mono text-xs font-medium tracking-wide uppercase">
+                    Drops
+                  </span>
                   <ChevronDown
-                    className={cn("size-4", { "rotate-180": showDrops })}
+                    className={cn("size-3.5 transition-transform duration-200", {
+                      "rotate-180": showDrops,
+                    })}
                   />
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <ul className="list-inside list-disc font-mono text-xs">
+                <ul className="text-muted-foreground mt-2 list-inside list-disc font-mono text-xs">
                   {mod.drops.map((drop, index) => {
                     const { location, chance } = drop
 
@@ -128,10 +138,11 @@ export const ModCard = ({
         </CardContent>
       </div>
       {!hideAction && (
-        <div className="flex flex-col justify-start space-y-2 border-l p-4">
+        <div className="bg-muted/30 flex flex-col justify-start gap-2 border-l p-3">
           <Button
             variant={isOwned ? "default" : "outline"}
             size="icon"
+            className="size-9"
             onClick={() => toggleOwnList()}
             aria-label={isOwned ? "Mark as not owned" : "Mark as owned"}
           >
@@ -141,6 +152,7 @@ export const ModCard = ({
           <Button
             variant={isWishlisted ? "default" : "outline"}
             size="icon"
+            className="size-9"
             onClick={() => toggleWishlist()}
             aria-label={
               isWishlisted ? "Remove from wishlist" : "Add to wishlist"
@@ -150,7 +162,7 @@ export const ModCard = ({
           </Button>
 
           <Button
-            className={cn({ "opacity-50": !mod.wikiaUrl })}
+            className={cn("size-9", { "opacity-50": !mod.wikiaUrl })}
             variant="outline"
             size="icon"
             asChild={!!mod.wikiaUrl}
@@ -171,7 +183,7 @@ export const ModCard = ({
           </Button>
 
           <Button
-            className={cn({ "opacity-50": !mod.tradable })}
+            className={cn("size-9", { "opacity-50": !mod.tradable })}
             variant="outline"
             size="icon"
             asChild={!!mod.tradable}

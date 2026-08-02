@@ -46,7 +46,8 @@ export const List = ({ mode, allMods }: ListProps) => {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold">
+      <h1 className="mb-6 flex items-center gap-3 text-xl font-semibold tracking-tight">
+        <span className="bg-brand h-5 w-1 shrink-0 rounded-full" aria-hidden />
         {mode === "owned" ? "Owned Mods" : "Wishlisted Mods"}
       </h1>
       {modsToShowed.length === 0 ? (
@@ -58,7 +59,7 @@ export const List = ({ mode, allMods }: ListProps) => {
             : "Loading…"}
         </p>
       ) : (
-        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-10 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
           {modsToShowed.map((m, index) => (
             <ModCard
               key={`mod_card_${m.rawName}`}

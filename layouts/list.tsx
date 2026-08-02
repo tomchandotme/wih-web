@@ -5,8 +5,8 @@ import { modSortingScore } from "@/lib/utils"
 import { modOwnlistAtom, modWishlistAtom } from "@/store/atoms"
 import { ModData } from "@/types"
 import { useAtomValue } from "jotai"
-import _ from "lodash"
-import { useEffect, useMemo, useState } from "react"
+import uniqBy from "lodash/uniqBy"
+import { useMemo, useSyncExternalStore } from "react"
 
 type ListProps = {
   mode: "owned" | "wishlisted"
@@ -15,8 +15,16 @@ type ListProps = {
   }
 }
 
+const emptySubscribe = () => () => {}
+const getClientSnapshot = () => true
+const getServerSnapshot = () => false
+
 export const List = ({ mode, allMods }: ListProps) => {
-  const [isMounted, setIsMounted] = useState(false)
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    getClientSnapshot,
+    getServerSnapshot,
+  )
 
   const modsWishlisted = useAtomValue(modWishlistAtom)
   const modsOwned = useAtomValue(modOwnlistAtom)
@@ -24,7 +32,7 @@ export const List = ({ mode, allMods }: ListProps) => {
   const modsToShowed = useMemo(() => {
     if (!allMods || !isMounted) return []
 
-    return _.uniqBy(
+    return uniqBy(
       Object.values(allMods).flatMap((v) => v),
       (v) => v.uniqueName,
     )
@@ -36,20 +44,26 @@ export const List = ({ mode, allMods }: ListProps) => {
       .sort((a, b) => modSortingScore(b) - modSortingScore(a))
   }, [allMods, isMounted, mode, modsOwned, modsWishlisted])
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
   return (
     <div>
       <h1 className="mb-6 text-2xl font-bold">
         {mode === "owned" ? "Owned Mods" : "Wishlisted Mods"}
       </h1>
-      <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {modsToShowed.map((m) => (
-          <ModCard key={`mod_card_${m.rawName}`} mod={m} hideAction showDrops />
-        ))}
-      </div>
+      {modsToShowed.length === 0 ? (
+        <p className="text-muted-foreground mb-8 text-sm">
+          {isMounted
+            ? mode === "owned"
+              ? "No owned mods yet. Mark mods as owned from the home page."
+              : "No wishlisted mods yet. Pin mods from the home page."
+            : "Loading…"}
+        </p>
+      ) : (
+        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {modsToShowed.map((m) => (
+            <ModCard key={`mod_card_${m.rawName}`} mod={m} showDrops />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

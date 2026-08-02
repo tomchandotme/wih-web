@@ -17,7 +17,8 @@ import {
 } from "lucide-react"
 import { useModOwnlist, useModWishlist } from "@/store/atoms"
 import { cn } from "@/lib/utils"
-import _ from "lodash"
+import snakeCase from "lodash/snakeCase"
+import Image from "next/image"
 import { useState } from "react"
 import { ModData } from "@/types"
 import { RARITY_COLORS } from "@/lib/constants"
@@ -67,13 +68,12 @@ export const ModCard = ({
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex items-center">
-            <img
+            <Image
               src={mod.imageUrl}
               alt={mod.name}
               width={100}
               height={100}
               className="mr-4"
-              loading="lazy"
             />
             <div>
               <p className="mb-2 text-sm whitespace-pre-line tabular-nums">
@@ -166,7 +166,7 @@ export const ModCard = ({
           >
             {mod.tradable ? (
               <a
-                href={`https://warframe.market/items/${_.snakeCase(mod.rawName)}`}
+                href={`https://warframe.market/items/${snakeCase(mod.rawName)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Open Warframe.market"

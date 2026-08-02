@@ -34,3 +34,20 @@ export const replacePlaceholdersWithEmojis = (text: string): string => {
     return DAMAGE_TYPE_EMOJI_MAP.get(matchedTag) || matchedTag
   })
 }
+
+const asSearchText = (value: unknown) => {
+  if (typeof value === "string") return value
+  if (Array.isArray(value)) return value.filter((v) => typeof v === "string").join(" ")
+  return ""
+}
+
+export const matchesModQuery = (mod: ModData, query: string) => {
+  if (!query) return true
+  const q = query.toLowerCase()
+  return (
+    asSearchText(mod.name).toLowerCase().includes(q) ||
+    asSearchText(mod.rawName).toLowerCase().includes(q) ||
+    asSearchText(mod.description).toLowerCase().includes(q) ||
+    asSearchText(mod.compatName).toLowerCase().includes(q)
+  )
+}

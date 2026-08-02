@@ -1,6 +1,6 @@
 import { atomWithStorage } from "jotai/utils"
 import { useAtom } from "jotai"
-import _ from "lodash"
+import xor from "lodash/xor"
 
 export const modWishlistAtom = atomWithStorage<string[]>("modWishlist", [])
 export const modOwnlistAtom = atomWithStorage<string[]>("modOwnlist", [])
@@ -10,7 +10,7 @@ export const useModWishlist = (rawName: string) => {
 
   return {
     isWishlisted: modWishlist.includes(rawName),
-    toggleWishlist: () => setModWishlist((v) => _.xor(v, [rawName])),
+    toggleWishlist: () => setModWishlist((v) => xor(v, [rawName])),
   }
 }
 
@@ -19,6 +19,6 @@ export const useModOwnlist = (rawName: string) => {
 
   return {
     isOwned: modOwnList.includes(rawName),
-    toggleOwnList: () => setModOwnList((v) => _.xor(v, [rawName])),
+    toggleOwnList: () => setModOwnList((v) => xor(v, [rawName])),
   }
 }

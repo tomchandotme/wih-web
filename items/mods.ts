@@ -26,10 +26,14 @@ const modDataExtractor = (v: ExtendedMod): ModData => {
       ? []
       : i18n.levelStats[i18n.levelStats.length - 1].stats
 
+  const fallbackDescription = Array.isArray(i18n.description)
+    ? i18n.description.join(" ")
+    : i18n.description || ""
+
   const description =
     replacePlaceholdersWithEmojis(lastStats.join(" "))
       .trim()
-      .replaceAll("\\n", "\n") || i18n.description
+      .replaceAll("\\n", "\n") || fallbackDescription
 
   const imageUrl = `https://cdn.warframestat.us/img/${v.imageName}`
 
@@ -155,7 +159,11 @@ export const modSets = [
   },
 ]
 
+let cachedMods: { [key: string]: ModData[] } | null = null
+
 export const getMods = () => {
+  if (cachedMods) return cachedMods
+
   const res: { [key: string]: ModData[] } = {}
 
   modSets.forEach(({ name, modFilter }) => {
@@ -191,5 +199,6 @@ export const getMods = () => {
     res[name] = mods
   })
 
+  cachedMods = res
   return res
 }

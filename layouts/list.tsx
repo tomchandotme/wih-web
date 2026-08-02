@@ -54,7 +54,7 @@ export const List = ({ mode, allMods }: ListProps) => {
           {isMounted
             ? mode === "owned"
               ? "No owned mods yet. Mark mods as owned from the home page."
-              : "No wishlisted mods yet. Pin mods from the home page."
+              : "No wishlisted mods yet. Add mods to your wishlist from the home page."
             : "Loading…"}
         </p>
       ) : (

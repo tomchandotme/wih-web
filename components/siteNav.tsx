@@ -9,6 +9,9 @@ type SiteNavProps = {
   categories: string[]
 }
 
+const navLabel = (name: string) =>
+  name.endsWith(" Mods") ? name.slice(0, -" Mods".length) : name
+
 export const SiteNav = ({ categories }: SiteNavProps) => {
   const pathname = usePathname()
   const isHome = pathname === "/"
@@ -79,34 +82,42 @@ export const SiteNav = ({ categories }: SiteNavProps) => {
   return (
     <div
       ref={navRef}
-      className="bg-background/95 sticky top-0 z-20 mx-auto mb-6 flex flex-wrap items-center justify-center gap-2 border-b py-4 backdrop-blur-sm"
+      className="bg-background/95 sticky top-0 z-20 border-b backdrop-blur-sm"
     >
-      {categories.map((c) => (
+      <div className="container mx-auto flex flex-nowrap items-center justify-start gap-2 overflow-x-auto px-4 py-3 md:py-4">
+        {categories.map((c) => (
+          <Button
+            variant={isHome && activeSection === c ? "default" : "ghost"}
+            size="sm"
+            key={`button_${c}`}
+            className="shrink-0"
+            asChild
+          >
+            <Link href={`/#${c}`}>{navLabel(c)}</Link>
+          </Button>
+        ))}
         <Button
-          variant={isHome && activeSection === c ? "default" : "ghost"}
-          key={`button_${c}`}
+          variant={pathname === "/owned" ? "default" : "ghost"}
+          size="sm"
+          className="shrink-0"
           asChild
         >
-          <Link href={`/#${c}`}>{c}</Link>
+          <Link href="/owned">Owned</Link>
         </Button>
-      ))}
-      <Button
-        variant={pathname === "/owned" ? "default" : "ghost"}
-        asChild
-      >
-        <Link href="/owned">Owned</Link>
-      </Button>
-      <Button
-        variant={pathname === "/wishlisted" ? "default" : "ghost"}
-        asChild
-      >
-        <Link href="/wishlisted">Wishlisted</Link>
-      </Button>
-      {!isHome && (
-        <Button variant="ghost" asChild>
-          <Link href="/">All Mods</Link>
+        <Button
+          variant={pathname === "/wishlisted" ? "default" : "ghost"}
+          size="sm"
+          className="shrink-0"
+          asChild
+        >
+          <Link href="/wishlisted">Wishlisted</Link>
         </Button>
-      )}
+        {!isHome && (
+          <Button variant="ghost" size="sm" className="shrink-0" asChild>
+            <Link href="/">All Mods</Link>
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

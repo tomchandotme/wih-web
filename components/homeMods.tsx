@@ -44,9 +44,11 @@ export const HomeMods = ({ mods }: HomeModsProps) => {
     (sum, c) => sum + filtered[c].length,
     0,
   )
+  const filtersActive = Boolean(query || unownedOnly)
 
   return (
     <>
+      <h1 className="sr-only">Warframe Mods</h1>
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Input
           type="search"
@@ -66,7 +68,7 @@ export const HomeMods = ({ mods }: HomeModsProps) => {
             Unowned only
           </Label>
         </div>
-        {(query || unownedOnly) && (
+        {filtersActive && (
           <Button
             variant="ghost"
             size="sm"
@@ -80,6 +82,12 @@ export const HomeMods = ({ mods }: HomeModsProps) => {
         )}
       </div>
 
+      {filtersActive && totalShown > 0 && (
+        <p className="text-muted-foreground mb-4 text-sm">
+          Showing {totalShown} mods
+        </p>
+      )}
+
       {totalShown === 0 ? (
         <p className="text-muted-foreground text-sm">No mods match your filters.</p>
       ) : (
@@ -88,9 +96,9 @@ export const HomeMods = ({ mods }: HomeModsProps) => {
 
           return (
             <Fragment key={`section_${c}`}>
-              <h1 className="mb-6 text-2xl font-bold" id={c}>
+              <h2 className="mb-6 text-2xl font-bold" id={c}>
                 {c}
-              </h1>
+              </h2>
 
               <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {modsCat.map((m) => (

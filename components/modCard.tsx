@@ -47,7 +47,7 @@ export const ModCard = ({
     "bg-slate-400": isGalvanized,
   })
 
-  const badgeColor = cn("mr-2 font-mono", {
+  const badgeColor = cn("font-mono", {
     [rarityColor]: !!rarityColor,
     "text-white": mod.rarity === "Common",
     "bg-orange-200": isArchon,
@@ -55,13 +55,18 @@ export const ModCard = ({
   })
 
   return (
-    <Card className="relative flex flex-row overflow-hidden pl-4 hover:shadow-md">
+    <Card
+      className={cn(
+        "relative flex flex-row overflow-hidden pl-4 hover:shadow-md",
+        isOwned && "bg-muted/50",
+      )}
+    >
       <div className={sideBarColor} />
-      <div className="grow">
+      <div className={cn("grow", isOwned && "opacity-70")}>
         <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            {mod.name}
-            <Badge variant="secondary" className="font-mono">
+          <CardTitle className="flex flex-wrap items-center justify-between gap-2 text-lg">
+            <span className="min-w-0">{mod.name}</span>
+            <Badge variant="secondary" className="shrink-0 font-mono">
               {mod.compatName?.toUpperCase()}
             </Badge>
           </CardTitle>
@@ -82,18 +87,21 @@ export const ModCard = ({
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Badge variant="outline" className={badgeColor}>
               {mod.rarity}
             </Badge>
+            {isOwned && (
+              <Badge variant="secondary" className="font-mono">
+                Owned
+              </Badge>
+            )}
           </div>
           {mod.drops && mod.drops.length > 0 && (
             <Collapsible onOpenChange={setShowDrops} open={showDrops}>
               <CollapsibleTrigger>
                 <div className="flex cursor-pointer items-center justify-center gap-2">
-                  <span className="font font-mono text-sm font-medium">
-                    Drops
-                  </span>
+                  <span className="font-mono text-sm font-medium">Drops</span>
                   <ChevronDown
                     className={cn("size-4", { "rotate-180": showDrops })}
                   />
@@ -131,7 +139,9 @@ export const ModCard = ({
             variant={isWishlisted ? "default" : "outline"}
             size="icon"
             onClick={() => toggleWishlist()}
-            aria-label={isWishlisted ? "Unpin" : "Pin"}
+            aria-label={
+              isWishlisted ? "Remove from wishlist" : "Add to wishlist"
+            }
           >
             <PinIcon className="size-4" />
           </Button>

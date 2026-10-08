@@ -1,8 +1,8 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/" # Location of your package.json
+  - package-ecosystem: "bun"
+    directory: "/"
     schedule:
-      interval: "monthly" # Options: "daily", "weekly", "monthly"
+      interval: "monthly"
     allow:
       - dependency-name: "@wfcd/items"
